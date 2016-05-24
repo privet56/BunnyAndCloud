@@ -1,0 +1,24 @@
+<div style="margin-left:99px;">
+<b-header title='Bunny Game'></b-header>
+
+<div>&nbsp;Click on the picture to start the Game!  &nbsp; <span style="color:blue;"> Find the 2 pinecones! </span><img src="assets/game_images/pinecone.png" title="pinecone to be found" style="width:16px;" /><span style="color:red;font-size:smaller;margin-left:99px;"> &nbsp; &nbsp; &nbsp; &nbsp; (optimized for Chrome and Firefox)</span></div>
+
+<!-- div>
+	<pre> COMING SOON! </pre>
+	<img src="assets/img/wip.jpg" />
+	
+	scrolling="no"
+	seamless="seamless"
+	
+</div -->
+
+<script>
+function onGamePlayingStarted()
+{
+	angular.element(document.getElementById("gameiframe")).scope().$apply('onGamePlayingStarted()');
+};
+</script>
+
+<div><iframe id="gameiframe" src="assets/bunnygame.html" style="width:1999px;height:999px;left:0px;overflow:hidden" marginheight="0" marginwidth="0" frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen msallowfullscreen></div>
+
+</div>

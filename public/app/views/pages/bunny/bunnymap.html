@@ -1,0 +1,48 @@
+<div style="margin-left:99px;">
+	
+<b-header title='Bunny Map'></b-header>
+
+<div>&nbsp;</div>
+</div>
+
+<link rel="stylesheet" href="assets/css/ol.css">
+<link rel="stylesheet" href="assets/css/ol.custom.css">
+<script src="assets/js/ol.js"></script>
+
+<div>
+    <div id="map" class="map"> </div>
+    <div id="search" style="position: absolute; top: 10px; right: 150px; padding: 5px;">
+    	<table><tr>
+    	<td style="vertical-align:top;">
+    		<form>
+	        <input type="text" placeholder="Add search keyword" style="width: 200px" ng-model="bunnymap.data.addKeywordValue">
+	        <button type="submit" ng-click="bunnymap.addKeyword()" ng-disabled="bunnymap.data.addKeywordValue == ''"> <span class="glyphicon glyphicon glyphicon-search text-danger"> </span> Add</button> <!-- div style="float:right;margin-left: 6px;font-size:smaller;"> (<span ng-bind="bunnymap.data.keywords.length"></span> keywords)</div-->
+	        </form>
+        </td>
+		<td>
+			<table style="background-color: #EEEEEE;float:right;z-index:999999">
+				<tr><td colspan="9" style="text-align:right;">({{bunnymap.data.keywords.length}} items)</td></tr>
+				<tr ng-repeat="kw in bunnymap.data.keywords">
+					<td style="padding-left:9px;padding-right:9px;"> {{ $index+1 }}. </td>
+					<td> {{ kw }}</td>
+					<td style="padding-left:9px;padding-right:9px;">
+						<a href="#" ng-click="bunnymap.delKeyword($index, kw)" title="remove keyword"> <span class="glyphicon glyphicon glyphicon-remove text-danger"> </span></a>
+					</td>
+				</tr>
+			</table>
+		</td>
+		</tr></table>
+		
+    </div>
+    
+    <div id="photo-info"> </div>
+    
+    <script type="text/html" id="photo-template">
+      <a href="{link}" target="_blank" title="Click to open photo in new tab"><img src="{url}" style="float: left"></a><br>
+      <p>Taken by <a href="//www.flickr.com/people/{author_id}" target="_blank" title="Click to view author details in new tab">{author}</a> on {date_taken} at lat: {latitude} lon: {longitude}</p><br>
+      <p>Tagged in <b>{tags}</b></p>
+    </script>
+    
+</div>
+
+<script src="assets/js/ol.flickrsearch.js"></script>

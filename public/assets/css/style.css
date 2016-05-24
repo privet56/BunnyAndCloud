@@ -1,0 +1,99 @@
+main
+{
+	/*padding-top:30px;*/	
+}
+
+/* HEADER 
+===================== */
+header .navbar 		{ 
+	border-radius:0;
+	opacity: 0.85;
+}
+
+/* NGANIMATE
+====================== */
+
+/* show and hide */
+.show-hide-message.ng-hide-remove {
+	-webkit-animation:zoomIn 0.3s both ease;
+	-moz-animation:zoomIn 0.3s both ease;
+	animation:zoomIn 0.3s both ease;
+}
+
+#content-views { position:relative; }
+.ng-enter, .ng-leave { width:100%; position:absolute; }
+.ng-enter {
+-webkit-animation:zoomInDown 1.2s both ease-in;
+-moz-animation:zoomInDown 1.2s both ease-in;
+animation:zoomInDown 1.2s both ease-in;
+}
+.ng-leave {
+ -webkit-animation:zoomOutDown 0.5s both ease-in;
+ -moz-animation:zoomOutDown 0.5s both ease-in;
+ animation:zoomOutDown 0.5s both ease-in;
+}
+
+/* ANIMATIONS
+====================== */
+.spinner {
+	-webkit-animation:spin 1s infinite;
+	-moz-animation:spin 1s infinite;
+	animation:spin 1s infinite;
+}
+
+@keyframes spin {
+	from 	{ transform:rotate(0deg); }
+	to 	{ transform:rotate(360deg); }
+}
+
+@-webkit-keyframes spin {
+	from 	{ -webkit-transform:rotate(0deg); }
+	to 	{ -webkit-transform:rotate(360deg); }
+}
+
+@-moz-keyframes spin {
+	from 	{ -moz-transform:rotate(0deg); }	
+	to 	{ -moz-transform:rotate(360deg); }
+}
+
+.navbar-inverse
+{
+	background-color:#FFFFF2;
+	background-image: url(/assets/img/falling_leaves.gif);
+	background-repeat: repeat-x;
+	background-size: auto 100%;
+}
+.container
+{
+	/*margin-left:9px;*/
+}
+.jumbotron
+{
+    background-color: transparent;
+}
+.navbar-inverse .navbar-nav > li > a
+{
+	color:black;
+}
+.navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus
+{
+	color:black !important;
+}
+.navbar-inverse .navbar-brand
+{
+	color:black;
+}
+.clearfix::before, .clearfix::after, .dl-horizontal dd::before, .dl-horizontal dd::after, .container::before, .container::after, .container-fluid::before, .container-fluid::after, .row::before, .row::after, .btn-toolbar::before, .btn-toolbar::after, .btn-group-vertical > .btn-group::before, .btn-group-vertical > .btn-group::after, .nav::before, .nav::after, .navbar::before, .navbar::after, .navbar-header::before, .navbar-header::after, .navbar-collapse::before, .navbar-collapse::after, .pager::before, .pager::after, .panel-body::before, .panel-body::after, .modal-footer::before, .modal-footer::after
+{
+    display: inline;
+}
+table
+{/* 
+    -webkit-border-radius: 24px;
+    -moz-border-radius: 24px;
+    border-radius: 24px;
+
+    -webkit-box-shadow: 8px 8px 8px rgba(204, 204, 204, 0.35);		/ *#DDDDDD;* /
+    -moz-box-shadow: 8px 8px 8px rgba(204, 204, 204, 0.35);
+    box-shadow: 8px 8px 8px rgba(204, 204, 204, 0.35);*/
+}

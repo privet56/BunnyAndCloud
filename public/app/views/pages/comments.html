@@ -1,0 +1,78 @@
+<div style="margin-left:99px;">
+	
+<b-header title='Comments'></b-header>
+
+<link rel="stylesheet" type='text/css' href="assets/css/jquery-ui-1.10.4.custom.min.css" />
+
+<div id="accordion" class="ui-accordion ui-widget ui-helper-reset" style="padding-bottom:19px;padding-right:150px;">
+    <h4 class="accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all" id="addnewcomment">
+        <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"> </span> Add new comment
+    </h4>
+    <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
+
+		<form ng-submit="comments.save()">
+			<table style="width:100%">
+				<tr>
+					<td style="width:100%;padding:9px;">
+						
+						<textarea name="description" style="border:1px solid #999999;background-color:#FFFFE6;width:99%;box-sizing:border-box;" rows="2" ng-model="comments.data.comment"> </textarea>
+						<!-- br /><input type="text" ng-model="comments.data.username" ng-disabled="true"  style="width:100%;padding-left:9px;" / -->
+					</td>
+					<td style="vertical-align:top;padding:9px;">
+						<button type="submit" class="btn btn-block btn-primary" ng-disabled="comments.isempty(comments.data.comment)" style="min-width:59px;"><span class="glyphicon glyphicon-plus"> </span>Add</button>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="9" style="width:100%;padding:9px;color:red;font-weight:bolder;">
+						{{comments.lastError}}
+					</td>
+				</tr>
+			</table>
+		</form>
+		
+	</div>
+</div>
+
+<script>
+	$('#accordion .ui-accordion-content').hide();
+	$('#accordion .accordion-header').click(function()
+	{
+	    var panel = $(this).next();
+	    var isOpen = panel.is(':visible');
+	    panel[isOpen? 'slideUp': 'slideDown'](999).trigger(isOpen? 'hide': 'show');
+	    if(!isOpen)	//=will be now opened
+	    {
+	    	$(this).children().first().removeClass('ui-icon-triangle-1-e').addClass('ui-icon-triangle-1-s');
+	    }
+	    else
+	    {
+	    	$(this).children().first().removeClass('ui-icon-triangle-1-s').addClass('ui-icon-triangle-1-e');
+	    }
+	    return false;// stop the link from causing a pagescroll
+  });
+</script>
+
+<table class="table table-bordered table-striped" ng-show="comments.data.comments">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>User</th>
+			<th>Date</th>
+			<th>Comment</th>
+			<th class="col-sm-2"> </th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="c in comments.data.comments">
+			<td>{{ $index+1 }}</td>
+			<td>{{ c.username }}</td>
+			<td>{{ c.date | date:'yyyy-MMMM-dd HH:mm:ss Z' }}</td>
+			<td><pre>{{ c.text }}</pre></td>
+			<td class="col-sm-2">
+				<a href="#" ng-click="comments.del(c._id)" class="btn btn-primary" ng-disabled="!comments.canDel(c)">Delete</a>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+</div>

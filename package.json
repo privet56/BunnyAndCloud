@@ -1,0 +1,19 @@
+{
+  "name": "bunnyandcloud",
+  "main": "main.js",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "~1.9.3",
+    "cookie-parser": "~1.3.5",
+    "express": "~4.10.3",
+    "jsonwebtoken": "^1.2.0",
+    "mongoose": "~3.8.19",
+    "morgan": "~1.5.0",
+    "pm2": "^0.15.10",
+    "pm2-interface": "^2.0.4",
+    "raw-body": "~2.1.1",
+    "socket.io": "^1.3.5",
+    "winston": "~0.5.9",
+    "pidusage": "~0.1.1"
+  }
+}

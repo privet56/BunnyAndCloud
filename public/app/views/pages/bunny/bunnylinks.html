@@ -1,0 +1,106 @@
+<div style="margin-left:99px;">
+	
+<b-header title='Links'></b-header>
+
+<link rel="stylesheet" type='text/css' href="assets/css/jquery-ui-1.10.4.custom.min.css" />
+
+<div style="border: 1px solid #ccc;">
+	<div style="margin:9px;">
+		<a href="https://www.mongodb.org/" target="_blank"> <span class="glyphicon glyphicon glyphicon-new-window"> </span> &nbsp; A used technology in this app: MongoDB </a>
+	</div>
+	<div style="margin:9px;">
+		<a href="https://nodejs.org/" target="_blank"> <span class="glyphicon glyphicon glyphicon-new-window"> </span> &nbsp; A used technology in this app: NodeJS </a>
+	</div>
+	<div style="margin:9px;">
+		<a href="https://angularjs.org/" target="_blank"> <span class="glyphicon glyphicon glyphicon-new-window"> </span> &nbsp; A used technology in this app: AngularJS </a>
+	</div>
+	<div style="margin:9px;">
+		<a href="https://www.youtube.com/user/herczeg3725/videos" target="_blank"> <span class="glyphicon glyphicon glyphicon-new-window text-danger"> </span> &nbsp; Bunny Videos on Youtube </a>
+	</div>
+	<div style="margin:9px;">
+		<a href="http://openlayers.org/" target="_blank"> <span class="glyphicon glyphicon glyphicon-new-window"> </span> &nbsp; A used technology in this app: OpenLayers </a>
+	</div>
+	<div style="margin:9px;">
+		<a href="https://www.openshift.com/" target="_blank"> <span class="glyphicon glyphicon glyphicon-new-window"> </span> &nbsp; A used technology in this app: RedHat OpenShift PaaS, as Cloud Provider </a>
+	</div>
+</div>
+
+<div style="margin-top:66px;">
+	<h3>How does it work?</h3>
+</div>
+
+<div style="border: 1px solid #ccc;margin-bottom:66px;">
+	<div id="accordion" class="ui-accordion ui-widget ui-helper-reset" style="padding-bottom:19px;">
+	    <h4 class="accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all" id="addnewcomment">
+	        <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"> </span> The Infinite Scroll
+	    </h4>
+	    <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
+			<img src="assets/img/bunnyandcloud.with.infinitescroll.gif" style="width:666px;">
+		</div>
+	</div>
+</div>
+<div style="border: 1px solid #ccc;margin-bottom:66px;">
+	<div id="accordion" class="ui-accordion ui-widget ui-helper-reset" style="padding-bottom:19px;">
+	    <h4 class="accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all" id="addnewcomment">
+	        <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"> </span> The Bunny Map
+	    </h4>
+	    <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
+			<img src="assets/img/bunnyandcloud.bunnymap.gif" style="width:666px;">
+		</div>
+	</div>
+</div>
+<div style="border: 1px solid #ccc;margin-bottom:66px;">
+	<div id="accordion" class="ui-accordion ui-widget ui-helper-reset" style="padding-bottom:19px;">
+	    <h4 class="accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all" id="addnewcomment">
+	        <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"> </span> The 3D Bunny
+	    </h4>
+	    <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
+			<img src="assets/img/bunnyandcloud.3d.gif" style="width:666px;">
+		</div>
+	</div>
+</div>
+<div style="border: 1px solid #ccc;margin-bottom:66px;">
+	<div id="accordion" class="ui-accordion ui-widget ui-helper-reset" style="padding-bottom:19px;">
+	    <h4 class="accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all" id="addnewcomment">
+	        <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"> </span> The Bunny Game
+	    </h4>
+	    <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
+			<img src="assets/img/bunnyandcloud.bunnygame.gif" style="width:666px;">
+		</div>
+	</div>
+</div>
+<div style="border: 1px solid #ccc;margin-bottom:66px;">
+	<div id="accordion" class="ui-accordion ui-widget ui-helper-reset" style="padding-bottom:19px;">
+	    <h4 class="accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all" id="addnewcomment">
+	        <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"> </span> The Bunny Community - List of Recently online Fans
+	    </h4>
+	    <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
+			<object width="800px" height="555px">
+			    <param name="movie" value="assets/img/bunnycommunity.swf">
+			    <embed src="assets/img/bunnycommunity.swf" width="800px" height="555px">
+			    </embed>
+			</object>
+		</div>
+	</div>
+</div>
+
+<script>
+	$('#accordion .ui-accordion-content').hide();
+	$('#accordion .accordion-header').click(function()
+	{
+	    var panel = $(this).next();
+	    var isOpen = panel.is(':visible');
+	    panel[isOpen? 'slideUp': 'slideDown'](999).trigger(isOpen? 'hide': 'show');
+	    if(!isOpen)	//=will be now opened
+	    {
+	    	$(this).children().first().removeClass('ui-icon-triangle-1-e').addClass('ui-icon-triangle-1-s');
+	    }
+	    else
+	    {
+	    	$(this).children().first().removeClass('ui-icon-triangle-1-s').addClass('ui-icon-triangle-1-e');
+	    }
+	    return false;// stop the link from causing a pagescroll
+  });
+</script>
+
+</div>

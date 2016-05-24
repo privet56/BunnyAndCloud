@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>3D Rabbit Explorer</title>
+    <script src="./libs/three.min.js"></script>
+    <script src="./libs/dat.gui.min.js"></script>
+    <script src="./libs/OBJLoader.js"></script>
+    <script src="./libs/MTLLoader.js"></script>
+    <script src="./libs/OBJMTLLoader.js"></script>
+    <script src="./libs/OrbitControls.js"></script>
+	<script src="./libs/postprocessing/CopyShader.js"></script>
+	<script src="./libs/postprocessing/ShaderPass.js"></script>
+	<script src="./libs/postprocessing/RenderPass.js"></script>
+	<script src="./libs/postprocessing/MaskPass.js"></script>
+	<script src="./libs/postprocessing/EffectComposer.js"></script>
+	<script src="./assets/fonts/helvetiker_regular.typeface.js"></script>
+	
+<script type="x-shader/x-vertex" id="vertexShader">
+vec3 mod289(vec3 x)
+{
+  return x - floor(x * (1.0 / 289.0)) * 289.0;
+}
+
+vec4 mod289(vec4 x)
+{
+  return x - floor(x * (1.0 / 289.0)) * 289.0;
+}
+
+vec4 permute(vec4 x)
+{
+  return mod289(((x*34.0)+1.0)*x);
+}
+
+vec4 taylorInvSqrt(vec4 r)
+{
+  return 1.79284291400159 - 0.85373472095314 * r;
+}
+
+vec3 fade(vec3 t) {
+  return t*t*t*(t*(t*6.0-15.0)+10.0);
+}
+
+// Classic Perlin noise, periodic variant
+float pnoise(vec3 P, vec3 rep)
+{
+  vec3 Pi0 = mod(floor(P), rep); // Integer part, modulo period
+  vec3 Pi1 = mod(Pi0 + vec3(1.0), rep); // Integer part + 1, mod period
+  Pi0 = mod289(Pi0);
+  Pi1 = mod289(Pi1);
+  vec3 Pf0 = fract(P); // Fractional part for interpolation
+  vec3 Pf1 = Pf0 - vec3(1.0); // Fractional part - 1.0
+  vec4 ix = vec4(Pi0.x, Pi1.x, Pi0.x, Pi1.x);
+  vec4 iy = vec4(Pi0.yy, Pi1.yy);
+  vec4 iz0 = Pi0.zzzz;
+  vec4 iz1 = Pi1.zzzz;
+
+  vec4 ixy = permute(permute(ix) + iy);
+  vec4 ixy0 = permute(ixy + iz0);
+  vec4 ixy1 = permute(ixy + iz1);
+
+  vec4 gx0 = ixy0 * (1.0 / 7.0);
+  vec4 gy0 = fract(floor(gx0) * (1.0 / 7.0)) - 0.5;
+  gx0 = fract(gx0);
+  vec4 gz0 = vec4(0.5) - abs(gx0) - abs(gy0);
+  vec4 sz0 = step(gz0, vec4(0.0));
+  gx0 -= sz0 * (step(0.0, gx0) - 0.5);
+  gy0 -= sz0 * (step(0.0, gy0) - 0.5);
+
+  vec4 gx1 = ixy1 * (1.0 / 7.0);
+  vec4 gy1 = fract(floor(gx1) * (1.0 / 7.0)) - 0.5;
+  gx1 = fract(gx1);
+  vec4 gz1 = vec4(0.5) - abs(gx1) - abs(gy1);
+  vec4 sz1 = step(gz1, vec4(0.0));
+  gx1 -= sz1 * (step(0.0, gx1) - 0.5);
+  gy1 -= sz1 * (step(0.0, gy1) - 0.5);
+
+  vec3 g000 = vec3(gx0.x,gy0.x,gz0.x);
+  vec3 g100 = vec3(gx0.y,gy0.y,gz0.y);
+  vec3 g010 = vec3(gx0.z,gy0.z,gz0.z);
+  vec3 g110 = vec3(gx0.w,gy0.w,gz0.w);
+  vec3 g001 = vec3(gx1.x,gy1.x,gz1.x);
+  vec3 g101 = vec3(gx1.y,gy1.y,gz1.y);
+  vec3 g011 = vec3(gx1.z,gy1.z,gz1.z);
+  vec3 g111 = vec3(gx1.w,gy1.w,gz1.w);
+
+  vec4 norm0 = taylorInvSqrt(vec4(dot(g000, g000), dot(g010, g010), dot(g100, g100), dot(g110, g110)));
+  g000 *= norm0.x;
+  g010 *= norm0.y;
+  g100 *= norm0.z;
+  g110 *= norm0.w;
+  vec4 norm1 = taylorInvSqrt(vec4(dot(g001, g001), dot(g011, g011), dot(g101, g101), dot(g111, g111)));
+  g001 *= norm1.x;
+  g011 *= norm1.y;
+  g101 *= norm1.z;
+  g111 *= norm1.w;
+
+  float n000 = dot(g000, Pf0);
+  float n100 = dot(g100, vec3(Pf1.x, Pf0.yz));
+  float n010 = dot(g010, vec3(Pf0.x, Pf1.y, Pf0.z));
+  float n110 = dot(g110, vec3(Pf1.xy, Pf0.z));
+  float n001 = dot(g001, vec3(Pf0.xy, Pf1.z));
+  float n101 = dot(g101, vec3(Pf1.x, Pf0.y, Pf1.z));
+  float n011 = dot(g011, vec3(Pf0.x, Pf1.yz));
+  float n111 = dot(g111, Pf1);
+
+  vec3 fade_xyz = fade(Pf0);
+  vec4 n_z = mix(vec4(n000, n100, n010, n110), vec4(n001, n101, n011, n111), fade_xyz.z);
+  vec2 n_yz = mix(n_z.xy, n_z.zw, fade_xyz.y);
+  float n_xyz = mix(n_yz.x, n_yz.y, fade_xyz.x); 
+  return 2.2 * n_xyz;
+}
+
+	varying vec2 vUv;
+	varying vec3 vReflect;
+	varying vec3 pos;
+	varying float ao;
+	uniform float time;
+	uniform float weight;
+	varying float d;
+
+	float stripes( float x, float f) {
+		float PI = 3.14159265358979323846264;
+		float t = .5 + .5 * sin( f * 2.0 * PI * x);
+		return t * t - .5;
+	}
+	
+	float turbulence( vec3 p ) {
+		float w = 100.0;
+		float t = -.5;
+		for (float f = 1.0 ; f <= 10.0 ; f++ ){
+			float power = pow( 2.0, f );
+			t += abs( pnoise( vec3( power * p ), vec3( 10.0, 10.0, 10.0 ) ) / power );
+		}
+		return t;
+	}
+
+	void main()
+	{
+		vUv = uv;
+	
+		vec4 mPosition = modelMatrix * vec4( position, 1.0 );
+		vec3 nWorld = normalize( mat3( modelMatrix[0].xyz, modelMatrix[1].xyz, modelMatrix[2].xyz ) * normal );
+		vReflect = normalize( reflect( normalize( mPosition.xyz - cameraPosition ), nWorld ) );
+		
+		pos = position;
+		float noise = 10.0 *  -.10 * turbulence( .5 * normal + time );
+
+		float displacement = - weight * noise;
+		displacement += 5.0 * pnoise( 0.05 * position + vec3( 2.0 * time ), vec3( 100.0 ) );
+		
+		ao = noise;
+		vec3 newPosition = position + normal * vec3( displacement );
+		gl_Position = projectionMatrix * modelViewMatrix * vec4( newPosition, 1.0 );
+	}
+	</script>
+	<script type="x-shader/x-vertex" id="fragmentShader">
+	varying vec2 vUv;
+	uniform sampler2D tExplosion;
+	varying vec3 vReflect;
+	varying vec3 pos;
+	varying float ao;
+	varying float d;
+	float PI = 3.14159265358979323846264;
+
+	float random(vec3 scale,float seed){return fract(sin(dot(gl_FragCoord.xyz+seed,scale))*43758.5453+seed);}
+	/*	TODO
+	uniform vec3      iResolution;           // viewport resolution (in pixels)
+	uniform float     iGlobalTime;           // shader playback time (in seconds)
+	uniform float     iChannelTime[4];       // channel playback time (in seconds)
+	uniform vec3      iChannelResolution[4]; // channel resolution (in pixels)
+	uniform vec4      iMouse;                // mouse pixel coords. xy: current (if MLB down), zw: click
+	uniform samplerCube iChannel0;          	 // input channel. XX = 2D/Cube
+	uniform vec4      iDate;                 // (year, month, day, time in seconds)
+	uniform float     iSampleRate;           // sound sample rate (i.e., 44100)
+	
+	float freqs[4];
+	
+	void mainImage( out vec4 fragColor, in vec2 fragCoord )
+	{
+		freqs[0] = texture2D( iChannel1, vec2( 0.01, 0.25 ) ).x;
+		freqs[1] = texture2D( iChannel1, vec2( 0.07, 0.25 ) ).x;
+		freqs[2] = texture2D( iChannel1, vec2( 0.15, 0.25 ) ).x;
+		freqs[3] = texture2D( iChannel1, vec2( 0.30, 0.25 ) ).x;
+
+		float brightness	= freqs[1] * 0.25 + freqs[2] * 0.25;
+		float radius		= 0.24 + brightness * 0.2;
+		float invRadius 	= 1.0/radius;
+		
+		vec3 orange			= vec3( 0.8, 0.65, 0.3 );
+		vec3 orangeRed		= vec3( 0.8, 0.35, 0.1 );
+		float time		= iGlobalTime * 0.1;
+		float aspect	= iResolution.x/iResolution.y;
+		vec2 uv			= fragCoord.xy / iResolution.xy;
+		vec2 p 			= -0.5 + uv;
+		p.x *= aspect;
+
+		float fade		= pow( length( 2.0 * p ), 0.5 );
+		float fVal1		= 1.0 - fade;
+		float fVal2		= 1.0 - fade;
+		
+		float angle		= atan( p.x, p.y )/6.2832;
+		float dist		= length(p);
+		vec3 coord		= vec3( angle, dist, time * 0.1 );
+		
+		float newTime1	= abs( snoise( coord + vec3( 0.0, -time * ( 0.35 + brightness * 0.001 ), time * 0.015 ), 15.0 ) );
+		float newTime2	= abs( snoise( coord + vec3( 0.0, -time * ( 0.15 + brightness * 0.001 ), time * 0.015 ), 45.0 ) );	
+		for( int i=1; i<=7; i++ ){
+			float power = pow( 2.0, float(i + 1) );
+			fVal1 += ( 0.5 / power ) * snoise( coord + vec3( 0.0, -time, time * 0.2 ), ( power * ( 10.0 ) * ( newTime1 + 1.0 ) ) );
+			fVal2 += ( 0.5 / power ) * snoise( coord + vec3( 0.0, -time, time * 0.2 ), ( power * ( 25.0 ) * ( newTime2 + 1.0 ) ) );
+		}
+		
+		float corona		= pow( fVal1 * max( 1.1 - fade, 0.0 ), 2.0 ) * 50.0;
+		corona				+= pow( fVal2 * max( 1.1 - fade, 0.0 ), 2.0 ) * 50.0;
+		corona				*= 1.2 - newTime1;
+		vec3 sphereNormal 	= vec3( 0.0, 0.0, 1.0 );
+		vec3 dir 			= vec3( 0.0 );
+		vec3 center			= vec3( 0.5, 0.5, 1.0 );
+		vec3 starSphere		= vec3( 0.0 );
+		
+		vec2 sp = -1.0 + 2.0 * uv;
+		sp.x *= aspect;
+		sp *= ( 2.0 - brightness );
+		float r = dot(sp,sp);
+		float f = (1.0-sqrt(abs(1.0-r)))/(r) + brightness * 0.5;
+		if( dist < radius ){
+			corona			*= pow( dist * invRadius, 24.0 );
+			vec2 newUv;
+			newUv.x = sp.x*f;
+			newUv.y = sp.y*f;
+			newUv += vec2( time, 0.0 );
+			
+			vec3 texSample 	= texture2D( iChannel0, newUv ).rgb;
+			float uOff		= ( texSample.g * brightness * 4.5 + time );
+			vec2 starUV		= newUv + vec2( uOff, 0.0 );
+			starSphere		= texture2D( iChannel0, starUV ).rgb;
+		}
+		
+		float starGlow	= min( max( 1.0 - dist * ( 1.0 - brightness ), 0.0 ), 1.0 );
+		//fragColor.rgb	= vec3( r );
+		fragColor.rgb	= vec3( f * ( 0.75 + brightness * 0.3 ) * orange ) + starSphere + corona * orange + starGlow * orangeRed;
+		fragColor.a		= 1.0;
+	}*/
+	
+	void main()
+	{
+		vec2 uv = vec2( 0, 1.3 * ao + .01 * random(vec3(12.9898,78.233,151.7182),0.0) );
+		uv = clamp( uv, vec2( 0. ), vec2( 1. ) );
+		vec3 color = texture2D( tExplosion, uv ).rgb;
+		gl_FragColor = vec4( color.rgb, 1.0 );
+		//mainImage(gl_FragColor, gl_FragCoord);
+	}
+	</script>
+    <style>
+        body
+		{
+            margin: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<script>
+	function createMaterial(vertexShader, fragmentShader)
+	{
+		var vertShader = document.getElementById(vertexShader).innerHTML;
+		var fragShader = document.getElementById(fragmentShader).innerHTML;
+		var attributes = {};
+		var uniforms = {
+			time: {type: 'f', value: 0.2},
+			scale: {type: 'f', value: 0.2},
+			alpha: {type: 'f', value: 0.6},
+			resolution: { type: "v2", value: new THREE.Vector2() }
+		};
+		uniforms.resolution.value.x = window.innerWidth;
+		uniforms.resolution.value.y = window.innerHeight;
+		var meshMaterial = new THREE.ShaderMaterial({
+			uniforms: uniforms,
+			attributes: attributes,
+			vertexShader: vertShader,
+			fragmentShader: fragShader,
+			transparent: true
+		});
+		return meshMaterial;
+	}
+	function setText(text)
+	{
+		var params = {
+			material: 0,
+			extrudeMaterial: 1,
+			bevelEnabled: true,
+			bevelThickness: 1.3,	//depth
+			bevelSize: 0.3,
+			font: "helvetiker",
+			style: "normal",
+			height: 3,
+			size: 3,
+			curveSegments: 1
+		};
+	
+		var t = scene.getObjectByName("text");
+		if (t)
+		{
+			t.geometry.needsUpdate = true;
+			scene.remove("text");
+			scene.remove(t);
+		}
+		
+		if(!text)
+		{
+			var l = document.getElementById("loading");
+			l.parentNode.removeChild(l);
+			return;
+		}
+	
+		var textGeo = new THREE.TextGeometry(text, params);
+		textGeo.computeBoundingBox();
+		textGeo.computeVertexNormals();
+		var material = new THREE.MeshFaceMaterial([
+			new THREE.MeshPhongMaterial({
+				color: 0xff22cc,
+				shading: THREE.FlatShading
+			}), // front
+			new THREE.MeshPhongMaterial({
+				color: 0xff22cc,
+				shading: THREE.SmoothShading
+			}) // side
+		]);
+		var textMesh = new THREE.Mesh(textGeo, material);
+		textMesh.position.x = -textGeo.boundingBox.max.x / 2;
+		textMesh.position.y = 2;
+		textMesh.rotation.y = 0.7;
+		textMesh.name = 'text';
+		scene.add(textMesh);	
+	}
+	
+	function adjustrabbit(amesh, iRecDepth)
+	{
+		if(iRecDepth > 3)return;
+		for(var i=0;i<amesh.length;i++)
+		{
+            amesh[i].geometry.computeVertexNormals();
+            amesh[i].geometry.computeFaceNormals();
+			amesh[i].geometry.computeTangents();
+            amesh[i].material.opacity = 1;
+            amesh[i].material.shading = THREE.SmoothShading;
+            amesh[i].castShadow = true;
+			adjustrabbit(amesh[i], iRecDepth + 1);
+		}
+	}
+
+    //    Show how to do this with a THREE.HemisphereLight
+
+    // global variables
+    var renderer;
+    var scene;
+    var camera;
+    var control;
+    var orbit;
+	var composer;
+	var sunMaterial;
+	var start = Date.now()
+
+    function init()
+	{
+		{
+			var l = document.getElementById("loading");
+			l.style.top = (window.innerHeight / 3)+"px";
+			l.style.left = (window.innerWidth / 3)+"px";
+		}
+	
+        // create a scene, that will hold all our elements such as objects, cameras and lights.
+        scene = new THREE.Scene();
+
+        // create a camera, which defines where we're looking at.
+        camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+        // create a render, sets the background color and the size
+        renderer = new THREE.WebGLRenderer();
+        renderer.setClearColor(0x6698FF, 1.0);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.shadowMapEnabled = true;
+
+        // position and point the camera to the center of the scene
+        camera.position.x = 25;
+        camera.position.y = 26;
+        camera.position.z = 23;
+        camera.lookAt(scene.position);
+
+        orbit = new THREE.OrbitControls(camera);
+		orbit.addEventListener( 'change', function()
+		{
+			if (camera.position.y < 1)	camera.position.y = 1;	//don't allow looking from below
+		});
+
+        // add the output of the renderer to the html element
+        document.body.appendChild(renderer.domElement);
+
+        var loader = new THREE.OBJMTLLoader();
+
+		THREE.DefaultLoadingManager.onProgress = function (item, loaded, total)
+		{
+			setText((loaded >= total) ? null : 'Loading ... ('+(loaded)+"/"+total+')');
+		};
+				
+		loader.load("./o/lea/lea.obj", "./o/lea/lea.mtl", function (lea)
+		{
+            lea.translateY(-1.3);	//little bit lower
+			lea.scale.set(0.7, 0.7, 0.7);
+			lea.translateX(-12);
+			
+			lea.name = "lea";
+			lea.rotation.x = 4.7;
+			
+			adjustrabbit(lea.children, 1);
+
+            scene.add(lea);
+        }); 
+		
+		loader.load("./o/leo/leo.obj", "./o/leo/leo.mtl", function (leo)
+		{
+            leo.translateY(-1.4);	//little bit lower
+			leo.translateX(12);
+			leo.scale.set(0.5, 0.5, 0.5);
+			
+			leo.name = "leo";
+			leo.rotation.x = 4.7;
+			
+			adjustrabbit(leo.children, 1);
+
+            scene.add(leo);
+        });
+
+        addHemisphereLight(scene);
+        addDirectionalLight(scene);
+        addFloor();
+
+
+        control = new function () {
+            this.hemiLight = true;
+            this.dirLight = true;
+            this.rotSpeed = 0.01;
+        };
+        addControls(control);
+		
+		{	//sun
+			sunMaterial = new THREE.ShaderMaterial({
+				uniforms:
+				{
+					tExplosion: { type: "t", value: THREE.ImageUtils.loadTexture( 'assets/explosion.png' ) },
+					time: { type: "f", value: 0.0 },
+					weight: { type: "f", value: 10.0 }
+				},
+				vertexShader: document.getElementById( 'vertexShader' ).textContent,
+				fragmentShader: document.getElementById( 'fragmentShader' ).textContent
+			});
+			
+			mesh = new THREE.Mesh( new THREE.IcosahedronGeometry( 20, 5 ), sunMaterial);
+			mesh.position.y = 33;
+			mesh.position.z = -133;
+			scene.add(mesh);
+		}
+		{
+			composer = new THREE.EffectComposer(renderer);
+			{
+				// add background using a camera
+				var cameraBG = new THREE.OrthographicCamera(-window.innerWidth, window.innerWidth, window.innerHeight, -window.innerHeight, -10000, 10000);
+				cameraBG.position.z = 50;
+				var sceneBG = new THREE.Scene();
+
+				var materialColor = new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture("./assets/starry-deep-outer-space-galaxy.jpg"), depthTest: false });
+				var bgPlane = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), materialColor);
+				bgPlane.position.z = 100;
+				bgPlane.scale.set(window.innerWidth * 2, window.innerHeight * 2, 1);
+				sceneBG.add(bgPlane);
+				var bgPass = new THREE.RenderPass(sceneBG, cameraBG);
+				composer.addPass(bgPass);
+			}
+			var renderPass = new THREE.RenderPass(scene, camera);
+			renderPass.clear = false;
+			composer.addPass(renderPass);
+
+			var effect = new THREE.ShaderPass(THREE.CopyShader);
+			effect.renderToScreen = true;
+			composer.addPass(effect);
+		}
+
+        // call the render function
+        render();
+    }
+
+
+    function addFloor()
+	{
+        var floorGeometry = new THREE.PlaneGeometry(200, 200, 20, 20);
+        var floorMaterial = new THREE.MeshPhongMaterial();
+        floorMaterial.map = THREE.ImageUtils.loadTexture("./assets/textures/06_DIFFUSE.jpg");
+        floorMaterial.normalMap = THREE.ImageUtils.loadTexture("./assets/textures/06_NORMAL.jpg");
+
+
+        floorMaterial.map.wrapS = floorMaterial.map.wrapT = THREE.RepeatWrapping;
+        floorMaterial.map.repeat.set(4, 4);
+        floorMaterial.normalMap.wrapS = floorMaterial.normalMap.wrapT = THREE.RepeatWrapping;
+		floorMaterial.normalMap.repeat.set( 4, 4 );
+
+        var floorMesh = new THREE.Mesh(floorGeometry, floorMaterial);
+        floorMesh.receiveShadow = true;
+        floorMesh.rotation.x = -0.5 * Math.PI;
+        floorMesh.name = 'floor';
+        scene.add(floorMesh);
+    }
+
+    function addHemisphereLight(scene) {
+        var hemiLight = new THREE.HemisphereLight(0xff4444, 0x44ff44, 0.6);
+        hemiLight.position.copy(new THREE.Vector3(0, 500, 0));
+
+        hemiLight.name = 'hemiLight';
+		hemiLight.intensity = 0.01;
+		hemiLight.grow = true;
+        scene.add(hemiLight);
+    }
+
+    function addDirectionalLight(scene) {
+        var directionalLight = new THREE.DirectionalLight();
+        directionalLight.position.copy(new THREE.Vector3(70, 40, 50));
+        directionalLight.castShadow = true;
+        directionalLight.shadowCameraVisible = false;
+        directionalLight.shadowCameraNear = 25;
+        directionalLight.shadowCameraFar = 200;
+        directionalLight.shadowCameraLeft = -50;
+        directionalLight.shadowCameraRight = 50;
+        directionalLight.shadowCameraTop = 50;
+        directionalLight.shadowCameraBottom = -50;
+        directionalLight.shadowMapWidth = 2048;
+        directionalLight.shadowMapHeight = 2048;
+
+        directionalLight.visible = true;
+
+        directionalLight.name = 'dirLight';
+        scene.add(directionalLight);
+    }
+
+
+    function addControls(controlObject)
+	{	return;
+        var gui = new dat.GUI();
+        gui.add(controlObject, 'hemiLight').onChange(function (e)
+		{
+            scene.getObjectByName('hemiLight').visible = e
+        });
+        gui.add(controlObject, 'dirLight').onChange(function (e)
+		{
+            scene.getObjectByName('dirLight').visible = e
+        });
+    }
+
+    function render()
+	{
+		if(composer)
+		{
+			renderer.autoClear = false;
+			composer.render();
+		}
+		else
+		{
+			renderer.render(scene, camera);
+		}
+		
+		{
+			
+			var hemiLight = scene.getObjectByName('hemiLight');
+			hemiLight.intensity += (hemiLight.grow) ? 0.01 : -0.01;
+			var max = 1.111;
+			var min = 0.333;
+			if((hemiLight.intensity > max) || (hemiLight.intensity < min))
+			{
+				if (hemiLight.intensity > max)hemiLight.intensity = max;
+				if (hemiLight.intensity < min)hemiLight.intensity = min;
+				hemiLight.grow = !hemiLight.grow;
+			}
+//console.log(hemiLight.intensity);
+		}
+		
+		sunMaterial.uniforms[ 'time' ].value = .00025 * ( Date.now() - start );
+        orbit.update();
+
+        var light = scene.getObjectByName('dirLight');
+
+        var x = light.position.x;
+        var z = light.position.z;
+
+        light.position.x = x * Math.cos(control.rotSpeed) + z * Math.sin(control.rotSpeed);
+        light.position.z = z * Math.cos(control.rotSpeed) - x * Math.sin(control.rotSpeed);
+
+        light.lookAt(scene.position);
+		{
+			var t = scene.getObjectByName("text");
+			if (t)
+			{
+				//t.rotation.z += 0.01;
+			}
+		}
+
+        requestAnimationFrame(render);
+    }
+
+    // calls the init function when the window is done loading.
+    window.onload = init;
+	
+	function onResize()
+	{
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+		renderer.setSize(window.innerWidth, window.innerHeight);
+		{
+			var l = document.getElementById("loading");
+			if( l)
+			{
+				l.style.top = (window.innerHeight / 3)+"px";
+				l.style.left = (window.innerWidth / 3)+"px";
+			}
+		}
+	}
+	window.addEventListener('resize', onResize, false);
+	
+</script>
+<body>
+	<img src="assets/loading.gif" id="loading" style="position:absolute;width:399px;height:399px">
+</body>
+</html>

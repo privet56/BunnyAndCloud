@@ -1,0 +1,37 @@
+<div class="jumbotron text-center">
+	<h1>The <span style="font-weight:bolder"> 'Bunny & Cloud'</span> Portal!</h1>
+	<p>&nbsp;</p>
+	<p><img src="assets/img/bunny.png"></p>
+	<p>&nbsp;</p>
+	<div ng-if="!main.loggedIn">
+		<div align="center">
+			<table class="table table-bordered table-striped" style="width:333px;">
+				<tr>
+					<td style="width:50%;text-align:right;padding-top:16px;">Login: &nbsp; </td><td><a href="/login" class="btn btn-primary" style="width:133px;">Login</a></td>
+				</tr><tr>
+					<td colspan="2" style="text-align:center"> or </td>
+				</tr><tr>
+					<td style="width:50%;text-align:right;padding-top:16px;"> Register: &nbsp; </td><td><a href="/users/create" class="btn btn-success" style="width:133px;">Register</a></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+
+	<div ng-if="main.loggedIn">
+		<div align="center">
+			<table class="table table-bordered table-striped" style="width:555px;">
+				<tr>
+					<td style="width:50%;text-align:right;padding-top:16px;">Enjoy: &nbsp; </td><td><a href="/bunny" class="btn btn-danger" style="width:155px;">View Bunnies</a></td>
+				</tr><tr>
+					<td colspan="2" style="text-align:center"> or </td>
+				</tr><tr>
+					<td style="width:50%;text-align:right;padding-top:16px;"> Manage the Bunny Portal Fans: &nbsp; </td><td><a href="/users" class="btn btn-success" style="width:155px;">View Bunny Fans</a></td>
+				</tr>
+			</table>
+		</div> 
+	</div>
+</div>
+
+<div style="text-align:center;line-height:1;letter-spacing:0px;">
+	<font color="000000" size="3" face="monospace, Courier" style="font-size:4px;white-space:nowrap;">&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;..~~......&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;==,,,,::~~....~~~~,,++..&nbsp;&nbsp;&nbsp;&nbsp;~~~~~~........~~&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~~~~==....~~......~~~~::~~&nbsp;&nbsp;,,::::~~::::~~....~~&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::~~==&nbsp;&nbsp;....~~..~~..~~~~,,,,,,,,~~,,==,,II??::..~~&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;..&nbsp;&nbsp;~~~~~~,,::~~::::,,======::::::??????::~~&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;..&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~~~~..,,,,,,::~~..,,,,,,??====::~~::,,,,88??,,&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::::77II??~~::::==::,,,,,,,,,,??II,,,,,,::~~,,++??&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~~&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~~==++++$$II::======,,,,::==,,????II==::,,,,??$$==&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;..::,,==++++II$$++??,,++,,,,::,,==,,??7777II==,,,,==++??&nbsp;&nbsp;<br>&nbsp;&nbsp;~~&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,,ZZ????++==88++II??,,??,,++,,,,==~~::II7777++==,,,,==77&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$$ZZ==??II7777++++++77++++,,ZZ&nbsp;&nbsp;..,,::,,????77??==::::::,,&nbsp;&nbsp;<br>..&nbsp;&nbsp;&nbsp;&nbsp;..77$$++77$$II$$++77ZZ$$88,,,,++....::::~~++++77??==::,,,,==&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;..~~7777++++$$II,,II$$??$$$$++==88,,&nbsp;&nbsp;&nbsp;&nbsp;..~~::??$$II==::::,,==&nbsp;&nbsp;<br>......8877OO77??IIIIII7788ZZDD8877IIIIII....&nbsp;&nbsp;..~~==??77==,,,,====&nbsp;&nbsp;<br>....::OODDDD++$$++??++ZZZZNNDD8877++IIII....&nbsp;&nbsp;..~~,,++II??::,,==??&nbsp;&nbsp;<br>....==OOZZ88887788$$OONNMMNNNNZZII,,??$$....&nbsp;&nbsp;....::==II++,,,,????&nbsp;&nbsp;<br>....77888888OO77$$OO88NNNNNNNN77II==::??,,......::,,++++77==,,II++&nbsp;&nbsp;<br>..~~88OOOOOONN88$$77DDDDDDNN++II,,::,,II,,~~~~..~~,,????77++,,7777&nbsp;&nbsp;<br>..,,OOOOOOOOOOOO++7788OO????,,,,::::==IIII::..&nbsp;&nbsp;~~~~::++88$$II7777::<br>..==DDOOZZOOZZ88$$ZZ88??,,,,~~~~~~~~::II??==..&nbsp;&nbsp;~~,,::,,$$8877++$$::<br>~~$$DDDDOODDDDDDZZ$$,,,,~~..........~~??II::,,..~~::..::778877ZZ$$~~<br>~~88DDZZZZ8888DDDDDD++::::~~~~....::,,,,II??==~~..::~~~~??ZZ88ZZ&nbsp;&nbsp;~~<br>~~7788++$$++7788DDOOOO77==~~~~..~~~~,,??,,++,,..~~~~,,::II8888ZZ&nbsp;&nbsp;::<br>~~$$$$OO$$77ZZ$$77OOZZ$$,,==~~~~~~::,,????II==II~~..::::==$$88ZZ&nbsp;&nbsp;~~<br>~~ZZZZ$$DDZZ88ZZ77OODD77II==::::::::II++++++::~~~~~~~~::==$$ZZOO&nbsp;&nbsp;,,<br>~~$$OOZZZZ++ZZZZ$$OODDZZ++,,====,,,,??==++II??,,,,??~~,,,,++OO&nbsp;&nbsp;&nbsp;&nbsp;,,<br>~~$$88ZZZZ7788$$8888OODD$$$$====????IIIIII==,,OO,,====++IIIIZZ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>~~ZZZZ88$$??II??++II8888$$IIIIIIIIII77IIII,,,,++??++77++77==88&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>,,77OO88OO77==II++++==++++++77++II77++II==::::++??II++ZZ77OO$$&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;II88ZZZZ77++IIIIII++II7777++II77++++==,,::::????7777++ZZ7777ZZ&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;??77++7777&nbsp;&nbsp;88$$77ZZ$$77????::::::::,,??II++++7777$$OO&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;II====,,::::::,,,,II????==++$$ZZ&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;==,,,,,,====::????77$$OO77ZZ$$</font>
+</div>

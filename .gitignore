@@ -1,0 +1,5 @@
+node_modules/
+_.log
+public/winston.app.log
+dummydata
+node_modules

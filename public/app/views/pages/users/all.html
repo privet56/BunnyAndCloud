@@ -1,0 +1,40 @@
+<div class="page-header">
+	<h1>
+		<img src="assets/img/bunny_hopps2.gif"> Bunny Portal Fans 
+		<a href="/users/create" class="btn btn-default">
+			<span class="glyphicon glyphicon-plus"></span> 
+			New Fan
+		</a>
+	</h1>
+</div>
+
+<div class="jumbotron text-center" ng-show="user.processing">
+	<span class="glyphicon glyphicon-repeat spinner"></span>
+	<p>Loading Fans...</p>
+</div>
+
+<table class="table table-bordered table-striped" ng-show="user.users">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>_id</th>
+			<th>Name</th>
+			<th>Username</th>
+			<th>Last Play</th>
+			<th class="col-sm-2"></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="person in user.users">
+			<td>{{ $index+1 }}</td>
+			<td>{{ person._id }}</td>
+			<td>{{ person.name }}</td>
+			<td>{{ person.username }}</td>
+			<td>{{ person.lastplay | date:'yyyy-MMMM-dd HH:mm:ss Z' }}</td>
+			<td class="col-sm-2">
+				<a ng-href="/users/{{ person._id }}" class="btn btn-danger" ng-disabled="!main.canEditUser(person)">Edit</a>
+				<a href="#" ng-click="user.deleteUser(person._id)" class="btn btn-primary" ng-if="main.canDelUser(person)">Delete</a>
+			</td>
+		</tr>
+	</tbody>
+</table>

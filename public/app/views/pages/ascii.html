@@ -1,0 +1,72 @@
+<div style="margin-left:3px;">
+	
+<b-header title='Image-To-ASCII Converter'></b-header>
+<style>
+	.asciitd
+	{
+    	line-height: 1;
+    	letter-spacing: 0px;
+    	text-align:center;
+    }
+</style>
+<script>
+	function onfile(input)
+	{
+		angular.element(input).scope().$apply('ascii.onfile("fileascii")');
+	}
+</script>
+Choose a file to convert to ASCII: <input type="file" id="fileascii" name="fileascii" onchange="onfile(this);" class="btn btn-danger btn-sm" />&nbsp;&nbsp;&nbsp;
+<span style="color:red;"><strong>{{ ascii.data.lastError }}</strong></span>
+<div style="color:red;width:100%;text-align:center;" ng-show="ascii.data.aDemoFiles.length > 0"><strong>Loading demo files...</strong></div>
+<div>&nbsp;</div>
+<table class="table table-bordered table-striped">
+	<thead>
+		<tr>
+			<th>Image</th>
+			<th>High Resolution ASCII</th>
+			<th>Low Resolution ASCII</th>
+			<th>Low Resolution ASCII colored</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="ii in ascii.data.asciis track by ii.id">
+			<td style="min-height:99px;"><!-- canvas_small -->
+				<canvas height="33px" width="33px" id="canvasascii_low{{ ii.id }}"> </canvas>
+			</td>
+			<td class="asciitd"><!-- High Resolution ASCII -->
+				<font class="asciitd" color="000000" size="3" face="monospace, Courier" id="fontascii{{ ii.id }}" style="font-size:1px;white-space:nowrap;">
+				</font><br>
+				<a href="#" ng-click="ascii.show(ii, 0)" class="btn btn-primary btn-sm" title="Open in new Window"> <span class="glyphicon glyphicon-export"> </span> </a>
+			</td>
+			<td class="asciitd"><!-- Low Resolution ASCII -->
+				<font class="asciitd" color="000000" size="3" face="monospace, Courier" id="fontascii_low{{ ii.id }}" style="font-size:6px;white-space:nowrap;">
+				</font><br>
+				<a href="#" ng-click="ascii.show(ii, 1)" class="btn btn-primary btn-sm" title="Open in new Window"> <span class="glyphicon glyphicon-export"> </span> </a>
+			</td>
+			<td class="asciitd"><!-- Low Resolution ASCII colored -->
+				<font class="asciitd" color="000000" size="3" face="monospace, Courier" id="fontascii_low_colored{{ ii.id }}" style="font-size:6px;white-space:nowrap;">
+				</font><br>
+				<a href="#" ng-click="ascii.show(ii, 2)" class="btn btn-primary btn-sm" title="Open in new Window"> <span class="glyphicon glyphicon-export"> </span> </a>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+</div>
+
+<div style="visibility:hidden">
+	<img src="" height="199px" id="imgascii" />
+	<img src="" height="33px"  id="imgascii_low" />
+	<canvas height="199px" width="199px" id="canvasascii"> </canvas>
+	<canvas height="33px"  width="33px"  id="canvasascii_low"> </canvas>
+
+	<img src="assets/img/android.png" height="199px" id="demo_imgascii1" />
+	<img src="assets/img/android.png" height="33px"  id="demo_imgascii_low1" />
+
+	<img src="assets/img/bunny.png" height="199px" id="demo_imgascii2" />
+	<img src="assets/img/bunny.png" height="33px"  id="demo_imgascii_low2" />
+	
+	<img src="assets/img/ascii.png" height="199px" id="demo_imgascii3" />
+	<img src="assets/img/ascii.png" height="33px"  id="demo_imgascii_low3" />
+	
+</div>		

@@ -1,0 +1,76 @@
+<div style="margin-left:99px;">
+	
+<b-header title='Bunny Carousel'></b-header>
+
+<div style="border: 1px solid #ccc;">
+	<div ng-repeat="theme in bunny.data.themes">
+		<div class="container">{{$index+1}}: Theme '{{ theme.name }}' ({{theme.pics().length}} pictures) </div>
+	</div>
+</div>
+
+<div>&nbsp;</div>
+
+<div ng-repeat='theme in bunny.data.themes' style="padding:6px;float:left;border: 1px solid #ccc;">
+	<div>Theme "{{theme.name}}": {{theme.pics().length}} pictures</div>
+ 	<div class="carousel-a" style="">
+        <ul rn-carousel rn-carousel-index="theme.carouselIndex" rn-carousel-auto-slide rn-carousel-pause-on-hover rn-carousel-buffered class="carousel2">
+            <li ng-repeat="pic in theme.pics()" ng-class="'id-' + pic">
+                <div ng-style="{'background-image': 'url(assets/img/bunny/{{theme.name}}{{pic}}.png)'}" class="bgimage">
+                  #{{ pic }}
+                </div>
+            </li>
+        </ul>
+        <div rn-carousel-indicators ng-if="theme.pics().length > 1" slides="theme.pics()" rn-carousel-index="theme.carouselIndex" class="rn-carousel-indicator custom-indicator"></div>
+    </div>
+</div>
+
+</div>
+
+<link rel="stylesheet" href="assets/css/angular-carousel.min.css">
+<style>
+.bgimage {
+    text-align:right;
+    color:red;
+    background-size:cover;
+    height: 100%;
+    background-position: center center;
+}
+
+ul[rn-carousel] {
+    width:400px;
+    height:400px;
+    margin: 0 auto;
+}
+
+.carousel5 li {
+    width:100%;
+    height:100%;
+    font-size:30px;
+    background-color: #ccc;
+}
+
+.carousel-a {
+    margin-top:20px;
+    display:inline-block;
+    text-align: center;
+}
+.carousel-a-fullscreen {
+  width:100%;
+  height:100%;
+}
+.carousel-a-fullscreen ul[rn-carousel] {
+  width:100%;
+  height:100%;
+}
+
+.carousel-a ul[rn-carousel-transition="hexagon"] {
+  margin-left:100px;
+}
+
+.custom-indicator span {
+  transition: all 0.3s ease-in;
+}
+.custom-indicator span.active {
+  color:red !important;
+}
+</style>

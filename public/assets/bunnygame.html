@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>Bunny Game</title>
+		<link rel="stylesheet" href="game_css/bunnygame.css" />
+	</head>
+	<body>
+		<div id="start">
+			<div id="instructions" class="center">
+				<!-- Click to start the Game! -->
+			</div>
+		</div>
+		<div id="hud" class="hidden">
+			<div id="crosshairs"> </div>
+			<div id="upper-right">
+				Health: <span id="health">100</span>
+			</div>
+			<div id="respawn" class="center hidden">
+				You were killed! Restart in <span class="countdown">3</span>&hellip;
+			</div>
+			<div id="respawn_won" class="center hidden">
+				You have found both	treasures.<br />
+				YOU WON!<br />
+				Press SPACE to quit!
+			</div>			
+			<div id="hurt" class="hidden"> </div>
+		</div>
+		
+<script src="game_js/lib/bigscreen.min.js"></script>
+<script src="game_js/lib/pointerlock.js"></script>
+<script src="game_js/lib/three.min.js"></script>
+<script src="game_js/lib/vendor/ColladaLoader.js"></script>
+<script src="game_js/lib/vendor/OBJLoader.js"></script>
+<script src="game_js/lib/vendor/AudioObject.js"></script>
+<script src="game_js/lib/vendor/EdgeShader.js"></script>
+<script src="game_js/lib/vendor/CopyShader.js"></script>
+<script src="game_js/lib/vendor/ShaderPass.js"></script>
+<script src="game_js/lib/vendor/RenderPass.js"></script>
+<script src="game_js/lib/vendor/MaskPass.js"></script>
+<script src="game_js/lib/vendor/EffectComposer.js"></script>
+
+<script type="text/javascript" src="game_js/lib/postprocessing/ShaderPass.js"></script>
+<script type="text/javascript" src="game_js/lib/postprocessing/BloomPass.js"></script>
+<script type="text/javascript" src="game_js/lib/postprocessing/EffectComposer.js"></script>
+<script type="text/javascript" src="game_js/lib/postprocessing/MaskPass.js"></script>
+<script type="text/javascript" src="game_js/lib/postprocessing/FilmPass.js"></script>
+<script type="text/javascript" src="game_js/lib/postprocessing/RenderPass.js"></script>
+<script type="text/javascript" src="game_js/lib/postprocessing/SavePass.js"></script>
+<script type="text/javascript" src="game_js/lib/postprocessing/TexturePass.js"></script>
+
+<script type="text/javascript" src="game_js/lib/shaders/HorizontalBlurShader.js"></script>
+<script type="text/javascript" src="game_js/lib/shaders/VerticalBlurShader.js"></script>
+<script type="text/javascript" src="game_js/lib/shaders/VerticalTiltShiftShader.js"></script>
+<script type="text/javascript" src="game_js/lib/shaders/HorizontalTiltShiftShader.js"></script>
+<script type="text/javascript" src="game_js/lib/shaders/TriangleBlurShader.js"></script>
+
+<script src="game_js/src/bunnygame.globals.js"></script>
+<script src="game_js/src/bunnygame.loader.js"></script>
+<script src="game_js/src/bunnygame.player.js"></script>
+<script src="game_js/src/bunnygame.bullet.js"></script>
+<script src="game_js/src/bunnygame.main.js"></script>
+		
+	</body>
+</html>

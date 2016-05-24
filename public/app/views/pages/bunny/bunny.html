@@ -1,0 +1,25 @@
+<div style="margin-left:99px;">
+	
+<b-header title='Infinite Bunny'></b-header>
+
+<div style="border: 1px solid #ccc;">
+	<div ng-repeat="theme in bunny.data.themes">
+		<div class=" container">{{$index+1}}: Theme '{{ theme.name }}' ({{theme.pics().length}} pictures): <!-- a href='#{{theme.name}}' on_click="document.getElementById({{theme.name}}).scrollIntoView();return false;"> goto theme </a--> </div>
+	</div>
+</div>
+
+<div>&nbsp;</div>
+</div>
+
+<div infinite-scroll="bunny.infiniteImgsLoad()" infinite-scroll-distance="3">
+	<div ng-repeat='pic in bunny.data.infiniteImgs' style="float:left;padding:3px;">
+		<table>
+			<tr><td style="background-color:#EBFFEB">
+			Theme: {{pic.theme}}, Picture Index: {{pic.idx}}
+			</td></tr>
+			<tr><td>
+				<img ng-src='assets/img/bunny/{{pic.theme}}{{pic.idx}}.png' style="width:555px;">
+			</td></tr>
+		</div>
+	</div>
+</div>

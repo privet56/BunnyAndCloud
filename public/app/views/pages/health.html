@@ -1,0 +1,39 @@
+<link rel="stylesheet" type='text/css' href="assets/css/tree-control.css" />
+<link rel="stylesheet" type='text/css' href="assets/css/tree-control-attribute.css" />
+
+<div style="margin-left:13px;">
+	
+<b-header title='Server Health Data'></b-header>
+
+<h5> Memory Data:</h5>
+
+<nvd3 options='health.data.chart.options' data='health.data.chart.data' api="api"> </nvd3>
+
+<div style="margin-left:99px;margin-top:9px;">
+<h5> PM2 Health Data:</h5>
+
+<div style="background--color: #555;">
+     <treecontrol class="tree-dark" tree-model="health.data.treedata" on-selection="health.onTreeNodeSelected(node, selected, $parentNode, $index, $first, $middle, $last, $odd, $even)" expanded-nodes="health.data.expandedNodes">
+     	
+         <span ng-switch="" on="node.type">
+         	
+             <span ng-switch-when="folder" class="glyphicon glyphicon-folder-open" aria-hidden="true"> </span>
+             <span ng-switch-when="pic" class="glyphicon glyphicon-picture" aria-hidden="true"> </span>
+             <span ng-switch-when="doc" class="glyphicon glyphicon-file" aria-hidden="true"> </span>
+             <span ng-switch-when="file" class="glyphicon glyphicon-floppy-disk" aria-hidden="true"> </span>
+             <span ng-switch-when="movie" class="glyphicon glyphicon-film" aria-hidden="true"> </span>
+             <span ng-switch-when="email" class="glyphicon glyphicon-envelope" aria-hidden="true"> </span>
+             <span ng-switch-when="home" class="glyphicon glyphicon-home" aria-hidden="true"> </span>
+             <span ng-switch-when="trash" class="glyphicon glyphicon-trash" aria-hidden="true"> </span>
+             <span ng-switch-when="stats" class="glyphicon glyphicon-stats" aria-hidden="true"> </span>
+             <span ng-switch-when="question-sign" class="glyphicon glyphicon-question-sign" aria-hidden="true"> </span>
+
+         </span> &nbsp; <span style="min-width:{{health.getNodeMinWidth(node)}};display: inline-block;background-color:{{health.getNodeBgColor(node)}};">{{node.label_name}}</span> &nbsp; <span style="">{{node.label_value}}</span>
+         
+     </treecontrol>
+ </div>
+
+<!-- div> {{ health.data.health | json:3 }} </div -->
+
+</div>
+</div>

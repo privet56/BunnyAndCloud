@@ -1,0 +1,35 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>twodadv</title>
+<style>
+	body
+	{
+        background: url('images/water.gif') no-repeat center center fixed; 
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -ms-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+	}
+</style>
+<body style="text-align:center;padding:0px;margin:0px;" onload="setTimeout(function(){window.focus();}, 1999);">
+	
+<div id="a1" style="padding:0px;margin:0px;"> </div>
+<div id="a2" style="padding:0px;margin:0px;"> </div>
+
+<script src="./pixi/pixi.min.js"></script>
+<script src="./spriteUtilities/spriteUtilities.js"></script>
+<script src="./dust/dust.js"></script>
+<script src="./tink/tink.js"></script>
+<script src="./bump/bump.js"></script>
+<script src="./scaleToWindow/scaleToWindow.js"></script>
+<script src="twodadv/twodadv2.js"></script>
+<script src="twodadv/sky.js"></script>
+<script>
+	window.onblur = function()
+	{
+		window.focus();
+		setTimeout(function() {window.focus();}, 99);
+	};
+</script>
+</body>

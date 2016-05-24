@@ -1,0 +1,43 @@
+<div style="margin-left:99px;">
+	
+<b-header title='Bunny Community'></b-header>
+
+<style>
+	.activeuser
+	{
+		color:#95B9E6;
+	}
+	.measuser
+	{
+		color:red;
+	}
+</style>
+
+<table class="table table-bordered table-striped">
+	<thead>
+		<tr>
+			<th colspan="2">
+				Recently Online Users
+				<br />
+				<span style="font-size:smaller;font-weight:normal;">(live data)</span>				
+				<br />
+				<span style="font-size:smaller;font-weight:normal;">(no persistence operations (db, file, etc.) are necessary, only WebSocket-communication)</span>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="user in main.bunnywebSocketMessage | orderBy : 'timestamp' : reverse track by user.id">
+			<td>{{ $index+1 }}</td>
+			<td>
+				<table class="table-striped" style="width:100%;">
+					<tr ng-repeat="(attrname, attrvalue) in user" ng-class="{activeuser: user.state == 'active', measuser: user.id == main.bunnywebSocketMessage.id}">
+						<td ng-show="attrname != 'id'" nowrap="nowrap" style="width:99px;font-size:11px;">{{ attrname }}</td>
+						<td ng-show="attrname != 'id'" nowrap="nowrap" style="font-size:11px;">{{ attrvalue | date:'yyyy-MMMM-dd HH:mm:ss Z' }}</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+</div>

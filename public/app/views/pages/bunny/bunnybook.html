@@ -1,0 +1,188 @@
+<div style="margin-left:33px;">
+	
+<b-header title='Bunny Book'></b-header>
+
+<style>
+.bookimage
+{
+	-webkit-border-radius:15px;
+	-moz-border-radius:15px;
+	-o-border-radius:15px;
+	-ms-border-radius:15px;
+	border-radius:15px;
+}
+</style>
+
+<script src="assets/js/jquery-ui.min.js"></script>
+<script src="assets/js/hash.js"></script>
+<script src="assets/js/turn.min.js"></script>
+<script src="assets/js/zoom.min.js"></script>
+<script src="assets/js/magazine.js"></script>
+<link rel="stylesheet" type='text/css' href="assets/css/jquery.ui.css" />
+<link rel="stylesheet" href="assets/css/magazine.css">
+
+<div>
+	&nbsp;
+</div>
+
+
+<div class="magazine-viewport">
+	<div class="magazine-container">
+		<div class="magazine">
+			<div class="bookimage gradient hard" depth="5" style="background-image:url(assets/img/book/1.png); no-repeat center #eee"> <div class="side"> </div> </div>
+			<div class="bookimage gradient hard front-side" depth="5" style="background-image:url(assets/img/book/2.png); no-repeat center #eee"> <div class="depth"> </div> </div>
+			<div class="bookimage gradient" style="background-image:url(assets/img/bunny/home01.png); no-repeat center #eee"> </div>
+			<div class="bookimage gradient" style="background-image:url(assets/img/bunny/home02.png); no-repeat center #eee"> </div>
+			<div class="bookimage gradient" style="background-image:url(assets/img/bunny/home03.png); no-repeat center #eee"> </div>
+			<div class="bookimage gradient" style="background-image:url(assets/img/bunny/home04.png); no-repeat center #eee"> </div>
+			<div class="bookimage gradient" style="background-image:url(assets/img/bunny/home05.png); no-repeat center #eee"> </div>
+			<div class="bookimage gradient" style="background-image:url(assets/img/bunny/home06.png); no-repeat center #eee"> </div>
+			<div class="bookimage gradient" style="background-image:url(assets/img/bunny/home07.png); no-repeat center #eee"> </div>
+			<div class="bookimage gradient" style="background-image:url(assets/img/bunny/home08.png); no-repeat center #eee"> </div>
+			<div class="bookimage gradient" style="background-image:url(assets/img/bunny/home09.png); no-repeat center #eee"> </div>
+			<div class="bookimage gradient" style="background-image:url(assets/img/bunny/home10.png); no-repeat center #eee"> </div>
+			<div class="bookimage gradient" style="background-image:url(assets/img/bunny/home11.png); no-repeat center #eee"> </div>
+			<div class="bookimage gradient" style="background-image:url(assets/img/bunny/home12.png); no-repeat center #eee"> </div>
+			<div class="bookimage gradient" style="background-image:url(assets/img/bunny/autumn01.png); no-repeat center #eee"> </div>
+			<div class="bookimage gradient" style="background-image:url(assets/img/bunny/autumn02.png); no-repeat center #eee"> </div>
+			<div class="bookimage gradient" style="background-image:url(assets/img/bunny/autumn03.png); no-repeat center #eee"> </div>
+			<div class="bookimage gradient" style="background-image:url(assets/img/bunny/spring01.png); no-repeat center #eee"> </div>
+			<div class="bookimage gradient" style="background-image:url(assets/img/bunny/spring02.png); no-repeat center #eee"> </div>
+			<div class="bookimage gradient" style="background-image:url(assets/img/bunny/spring03.png); no-repeat center #eee"> </div>
+			<div class="bookimage gradient" style="background-image:url(assets/img/bunny/spring04.png); no-repeat center #eee"> </div>
+			<div class="bookimage gradient" style="background-image:url(assets/img/bunny/summer01.png); no-repeat center #eee"> </div>
+			<div class="bookimage gradient" style="background-image:url(assets/img/bunny/summer02.png); no-repeat center #eee"> </div>
+			<div class="bookimage gradient" style="background-image:url(assets/img/bunny/summer03.png); no-repeat center #eee"> </div>
+			<div class="bookimage gradient" style="background-image:url(assets/img/bunny/summer04.png); no-repeat center #eee"> </div>
+			<div class="bookimage gradient" style="background-image:url(assets/img/bunny/winter01.png); no-repeat center #eee"> </div>
+			<div class="bookimage gradient" style="background-image:url(assets/img/bunny/winter02.png); no-repeat center #eee"> </div>
+			<div class="bookimage gradient" style="background-image:url(assets/img/bunny/winter03.png); no-repeat center #eee"> </div>
+			<div class="bookimage gradient" style="background-image:url(assets/img/bunny/winter04.png); no-repeat center #eee"> </div>
+			<div class="bookimage gradient" style="background-image:url(assets/img/bunny/winter05.png); no-repeat center #eee"> </div>
+			<div class="bookimage gradient" style="background-image:url(assets/img/bunny/winter06.png); no-repeat center #eee"> </div>
+			<div class="bookimage gradient" style="background-image:url(assets/img/bunny/winter07.png); no-repeat center #eee"> </div>
+			<div class="bookimage gradient" style="background-image:url(assets/img/bunny/winter07.png); no-repeat center #eee"> </div>
+			<div class="bookimage gradient hard back-side" depth="5" style="background-image:url(assets/img/book/back1.png); no-repeat center #eee"> <div class="depth"> </div> </div>
+			<div class="bookimage gradient hard" depth="5" style="background-image:url(assets/img/book/back2.png); no-repeat center #eee"> <div class="side"> </div> </div>
+		</div>
+	</div>
+</div>
+
+
+<div id="slider-bar" class="turnjs-slider">
+	<div id="slider"> </div>
+</div>
+
+<script type="text/javascript">
+
+window.setTimeout(function()
+{
+	$('.magazine').turn('next');	
+}, 2222);
+
+function numberOfViews(book)
+{
+	return book.turn('pages') / 2 + 1;
+}
+function getViewNumber(book, page)
+{
+	return parseInt((page || book.turn('page'))/2 + 1, 10);
+}
+function moveBar(yes)
+{
+	$('#slider .ui-slider-handle').css({zIndex: yes ? -1 : 10000});
+}
+
+var aImgs = null;
+
+function setPreview(view)
+{
+	if(!aImgs)return;
+	
+	var previewWidth = 115,
+		previewHeight = 73,
+		previewSrc = 'about:blank',
+		preview = $(_thumbPreview.children(':first')),
+		numPages = (view == 1 || view == $('#slider').slider('option', 'max')) ? 1 : 2,
+		width = (numPages == 1) ? previewWidth/2 : previewWidth;
+		
+	previewSrc = aImgs[view - 1];
+
+	if(!previewSrc)return;
+
+	_thumbPreview.
+		css({width: width + 25,
+			height: previewHeight + 25
+		});
+
+	preview.css({
+		width: width,
+		height: previewHeight
+	});
+
+	preview.css({backgroundImage: previewSrc});
+	preview.css({"background-size": "auto 90%", 'background-repeat': 'no-repeat', backgroundPosition: 'center'});
+}
+
+$( "#slider" ).slider({ 
+	min: 1,
+	max: $('.magazine').children().length,
+
+	start: function(event, ui)
+	{
+		if (!window._thumbPreview)
+		{
+			_thumbPreview = $('<div />', {'class': 'thumbnail'}).html('<div></div>');
+			setPreview(ui.value);
+			_thumbPreview.appendTo($(ui.handle));
+		}
+		else
+		{
+			setPreview(ui.value);
+		}
+		moveBar(false);
+	},
+
+	slide: function(event, ui)
+	{
+		setPreview(ui.value);
+	},
+
+	stop: function()
+	{
+		if (window._thumbPreview)_thumbPreview.removeClass('show');
+		$('.magazine').turn('page', $(this).slider('value'));
+	}
+});
+
+function loadApp()
+{
+	aImgs = new Array();
+	$('.magazine').children().each(function ()
+    {
+    	aImgs.push($(this).css('background-image'));
+	});
+	
+	
+	$('.magazine').turn({
+		width:1100,			//"90%",
+		height:600,
+		elevation: 50,
+		gradients: true,
+		autoCenter: true,
+		duration: 3000,
+		when:
+		{
+			turned: function(e, page, view)
+			{
+				var book = $(this);
+				$('#slider').slider('value', getViewNumber(book, page));
+				book.turn('center');
+			}
+		}
+	});
+};
+ 
+loadApp();
+
+</script>

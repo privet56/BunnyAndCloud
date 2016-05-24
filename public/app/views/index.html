@@ -1,0 +1,207 @@
+<!-- DOCTYPE html -->
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="initial-scale=1">
+	<link rel="shortcut icon" type="image/x-icon" href="assets/img/ico.ico" />
+	<title>Bunny &amp; Cloud</title>
+
+	<!-- FOR ANGULAR ROUTING -->
+	<base href="/">
+
+	<!-- CSS  -->
+	<link rel="stylesheet" type='text/css' href="assets/css/jquery-ui-1.10.4.custom.min.css" />
+	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="assets/css/animate.min.css">
+	<link rel="stylesheet" href="assets/css/style.css">
+
+	<!-- JS -->
+	<!-- load angular and angular-route via CDN -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/angular.min.js"></script>
+	<script src="assets/js/angular-route.js"></script>
+	<script src="assets/js/angular-animate.js"></script>
+	<script src="assets/js/angular-tree-control.js"></script>
+	
+	<script src="assets/js/d3.min.js"></script>
+	<script src="assets/js/nv.d3.min.js"></script>
+	<script src="assets/js/angular-nvd3.min.js"></script>
+	<link rel="stylesheet" href="assets/css/nv.d3.min.css">
+
+	<!-- controllers -->
+	<script src="app/controllers/mainCtrl.js"></script>
+	<script src="app/controllers/userCtrl.js"></script>
+	<script src="app/controllers/bunnyCtrl.js"></script>
+	<script src="app/controllers/bunnymapCtrl.js"></script>
+	<script src="app/controllers/bunny3dCtrl.js"></script>
+	<script src="app/controllers/bunnygameCtrl.js"></script>
+	<script src="app/controllers/commentsCtrl.js"></script>
+	<script src="app/controllers/asciiCtrl.js"></script>
+	<script src="app/controllers/healthCtrl.js"></script>
+
+	<!-- services -->
+	<script src="app/services/authService.js"></script>
+	<script src="app/services/userService.js"></script>
+	<script src="app/services/commentService.js"></script>
+	<script src="app/services/healthService.js"></script>
+	
+	<script src="app/directives/header.js"></script>
+
+	<!-- main Angular app files -->
+	<script src="app/app.routes.js"></script>
+	<script src="app/app.js"></script>
+</head>
+<body ng-app="userApp" ng-controller="mainController as main" style="background-image:url(assets/img/b.jpg);background-repeat:no-repeat;">
+
+<!-- NAVBAR -->
+<header>
+	<div class="navbar navbar-inverse">
+		<div class="container">
+			<div class="navbar-header">
+				<a href="/" class="navbar-brand"> <span class="glyphicon glyphicon-cloud text-danger" style="top:5px;"> </span> &nbsp; Bunny &amp; Cloud </a>
+			</div> 
+			<ul class="nav navbar-nav" ng-if="main.loggedIn" style="margin-top:6px;">
+				<li><a href="/users"><span class="glyphicon glyphicon-user"></span> Bunny Fans</a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li ng-if="main.loggedIn" class="navbar-text" style="color:red;">Have fun, <span ng-bind="main.user.username"></span>!</li>
+				<li><a href="/">Home</a></li>
+				
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color:red;">Bunnies<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li ng-disabled="!main.loggedIn" style="color:red;"> <a ng-href="/bunny" style="color:red;" class="btn">The Infinite Bunnies </a> </li><!-- TODO: (dis|en)enable correctly -->
+						<li ng-disabled="!main.loggedIn" style="color:red;"> <a ng-href="/bunnycarousel" style="color:red;" class="btn">Bunny Carousel</a> </li>
+						<li ng-disabled="!main.loggedIn" style="color:red;"> <a ng-href="/bunnymap" style="color:red;" class="btn">The Bunny Map</a> </li>
+						<li ng-disabled="!main.loggedIn" style="color:red;"> <a ng-href="/bunny3d" style="color:red;" class="btn">Bunnies in 3D</a> </li>
+						<li ng-disabled="!main.loggedIn" style="color:red;"> <a ng-href="/bunnygame" style="color:red;" class="btn">The Bunny Game</a> </li>
+						<li ng-disabled="!main.loggedIn" style="color:red;"> <a ng-href="/bunny3dexplorer" style="color:red;" class="btn">3D Explorer</a> </li>
+						<li> <a ng-href="/bunnybook" class="btn">Bunny Book</a> </li>
+					</ul>
+				</li>
+				<li ng-if="!main.loggedIn"><a href="/login">Login</a></li>
+				<li ng-if="main.loggedIn"><a href="#" ng-click="main.doLogout()">Logout</a></li>
+				<li><a href="#" ng-click="main.doInfo()">Info</a></li>
+			</ul>
+		</div>
+	</div>
+</header>
+
+<div id="navigatorcontainer">
+<div id="navigatoraccordion" class="ui-accordion ui-widget ui-helper-reset" style="padding-bottom:19px;padding-right:1px;position:absolute;right:0px;margin:9px;margin-top:-35px;padding:9px;background-color:#FFFFE6;text-align:left;z-index:9999999;opacity:0.77;background-image:url(assets/img/falling_leaves.gif);background-repeat:repeat-x;background-size: auto 100%;">
+    <h4 class="accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all" id="addnewcomment">
+        <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"> </span> Navigator
+    </h4>
+    <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" style="background:transparent;text-transform:uppercase;">
+		<div style="margin-bottom:3px;"><a href="/"> <span class="glyphicon glyphicon-home"> </span> &nbsp; Home</a></div>
+		<div style="margin-bottom:3px;" ng-if="!main.loggedIn"><a href="/login"> <span class="glyphicon glyphicon glyphicon-log-in"> </span> &nbsp; Login</a></div>
+		<div style="margin-bottom:3px;" ng-if="!main.loggedIn"><a href="/users/create"> <span class="glyphicon glyphicon glyphicon glyphicon-registration-mark"> </span> &nbsp; Register</a></div>
+		
+		<div style="margin-bottom:3px;" ng-if="main.loggedIn"> <a href="/users"> <span class="glyphicon glyphicon-user"> </span> &nbsp; Bunny Fans</a></div>
+		<div style="margin-bottom:3px;color:gray;" ng-if="!main.loggedIn"> <span class="glyphicon glyphicon-user"> </span> &nbsp; Bunny Fans</div>
+		
+		<div style="margin-bottom:3px;" ng-if="main.loggedIn" style="color:red;"> <a href="/bunny" style="color:red;">Infinite Bunny </a> </div>
+		<div style="margin-bottom:3px;color:gray;" ng-if="!main.loggedIn" style="color:red;"> Infinite Bunny </div>
+		
+		<div style="margin-bottom:3px;" ng-if="main.loggedIn" style="color:red;"> <a href="/bunnycarousel" style="color:red;">Bunny Carousel </a> </div>
+		<div style="margin-bottom:3px;color:gray;" ng-if="!main.loggedIn" style="color:red;"> Bunny Carousel </div>
+		
+		<div style="margin-bottom:3px;" ng-if="main.loggedIn" style="color:red;"> <a href="/bunnymap" style="color:red;"> <span class="glyphicon glyphicon glyphicon glyphicon-map-marker"> </span> &nbsp; Bunny Map </a> </div>
+		<div style="margin-bottom:3px;color:gray;" ng-if="!main.loggedIn" style="color:red;"> <span class="glyphicon glyphicon glyphicon glyphicon-map-marker"> </span> &nbsp; Bunny Map </div>
+		
+		<div style="margin-bottom:3px;" ng-if="main.loggedIn" style="color:red;"> <a href="/bunny3d" style="color:red;">Bunnies in 3D </a> </div>
+		<div style="margin-bottom:3px;color:gray;" ng-if="!main.loggedIn"> Bunnies in 3D </div>
+		
+		<div style="margin-bottom:3px;" ng-if="main.loggedIn" style="color:red;"> <a href="/bunnygame" style="color:red;">Bunny Game </a> </div>
+		<div style="margin-bottom:3px;color:gray;" ng-if="!main.loggedIn"> Bunny Game </div>
+		
+		<div style="margin-bottom:3px;"> <a href="/bunnytwodadv"> <span class="glyphicon glyphicon-picture"> </span> &nbsp; 2D Adventure</a> </div>
+		
+		<div style="margin-bottom:3px;"> <a href="/ascii"> <span class="glyphicon glyphicon-qrcode"> </span> &nbsp; Pic To ASCII</a> </div>
+		
+		<div ng-if="main.loggedIn" style="color:red;"> <a href="/bunny3dexplorer" style="color:red;"> <span class="glyphicon glyphicon glyphicon glyphicon-camera"> </span> &nbsp; 3D Explorer</a> </div>
+		<div ng-if="!main.loggedIn" style="color:gray;"> <span class="glyphicon glyphicon glyphicon glyphicon-camera"> </span> &nbsp; 3D Explorer </div>
+		
+		<div style="margin-bottom:3px;"> <a href="/bunnybook"> <span class="glyphicon glyphicon glyphicon glyphicon-book"> </span> &nbsp; Bunny Book</a> </div>
+		<div style="color:red;"> <a href="/native" style="color:red;"> <span class="glyphicon glyphicon glyphicon glyphicon-download"> </span> &nbsp; Downloads</a> </div>
+		<div style="margin-bottom:3px;"> <a href="/comments"> <span class="glyphicon glyphicon glyphicon glyphicon-comment"> </span> &nbsp; Comments </a> </div>
+		<div style="margin-bottom:3px;"> <a href="/health"> <span class="glyphicon glyphicon glyphicon glyphicon-heart"> </span> &nbsp; Server Health </a> </div>
+		
+		<div style="margin-bottom:3px;" ng-if="main.loggedIn"> <a href="/community">Community <span ng-show="main.bunnywebSocketMessage">(<span ng-bind="main.bunnywebSocketMessage.length" ng-show="main.bunnywebSocketMessage"></span>)</span> </a> </div>
+		<div style="margin-bottom:3px;color:gray" ng-if="!main.loggedIn"> Community <span ng-show="main.bunnywebSocketMessage">(<span ng-bind="main.bunnywebSocketMessage.length" ng-show="main.bunnywebSocketMessage"></span>)</span> </div>
+		
+		<div style="margin-bottom:3px;" style="color:red;"> <a href="/bunnylinks">Bunny Links </a> </div>
+	</div>
+</div>
+</div>
+
+<script>
+	$('#navigatoraccordion .ui-accordion-content').hide();
+	$('#navigatoraccordion .accordion-header').click(function()
+	{
+	    var panel = $(this).next();
+	    var isOpen = panel.is(':visible');
+	    panel[isOpen? 'slideUp': 'slideDown'](999).trigger(isOpen? 'hide': 'show');
+	    if(!isOpen)	//=will be now opened
+	    {
+	    	$(this).children().first().removeClass('ui-icon-triangle-1-e').addClass('ui-icon-triangle-1-s');
+	    }
+	    else
+	    {
+	    	$(this).children().first().removeClass('ui-icon-triangle-1-s').addClass('ui-icon-triangle-1-e');
+	    }
+	    return false;// stop the link from causing a pagescroll
+  });
+  setTimeout(function(){$('#navigatoraccordion .accordion-header').click();}, 1999);
+</script>
+
+<main class="container_" style="margin-top:39px;margin-left:39px;margin-right:39px;margin-bottom:3px;">
+	<!-- ANGULAR VIEWS -->
+	<div id="content-views">
+		<div ng-view></div>
+	</div>
+</main>
+
+<div class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title"></h4>
+      </div>
+      <div class="modal-body">
+        <p></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<link rel="stylesheet" href="assets/css/bootstrap-dialog.min.css">
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/bootstrap-dialog.min.js"></script>
+<script src="assets/js/ng-infinite-scroll.min.js"></script>
+
+<script src="assets/js/angular-touch.min.js"></script>
+<script src="assets/js/angular-carousel.min.js"></script>
+
+<script src="assets/js/three.min.js"></script>
+
+<script src="assets/js/socket.io-1.3.5.js"></script>
+
+<link href='https://fonts.googleapis.com/css?family=Dancing+Script:700' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Shadows+Into+Light+Two' rel='stylesheet' type='text/css'>
+<style>
+	h1 {
+		font-family: 'Shadows Into Light Two', cursive;
+	}
+	h2, h3, h4, h5, h6, a {
+		
+		font-family: 'Dancing Script', cursive;
+	}
+</style>
+
+<img src="assets/img/bunny_hopps.gif" style="position:absolute;bottom:0px;text-align:center;width:64px;left:0px;">
+</body>
+</html>
