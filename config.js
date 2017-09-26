@@ -1,6 +1,6 @@
 module.exports = {
-	'ipaddress': process.env.OPENSHIFT_NODEJS_IP,
-	'port'     : process.env.OPENSHIFT_NODEJS_PORT || 80,
+	'ipaddress': process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0',
+	'port'     : process.env.OPENSHIFT_NODEJS_PORT || 8080,
 	'database': 'mongodb://myusername:mypwd@apollo.modulusmongo.net:27017/mydb',
 	'secret': 'mysecret'
 };
