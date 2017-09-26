@@ -97,29 +97,35 @@
 		<div style="margin-bottom:3px;" ng-if="!main.loggedIn"><a href="/users/create"> <span class="glyphicon glyphicon glyphicon glyphicon-registration-mark"> </span> &nbsp; Register</a></div>
 		
 		<div style="margin-bottom:3px;" ng-if="main.loggedIn"> <a href="/users"> <span class="glyphicon glyphicon-user"> </span> &nbsp; Bunny Fans</a></div>
-		<div style="margin-bottom:3px;color:gray;" ng-if="!main.loggedIn"> <span class="glyphicon glyphicon-user"> </span> &nbsp; Bunny Fans</div>
+		<div style="margin-bottom:3px;color:gray;" ng-if="!main.loggedIn" title="Unavailable as not logged in!"> <span class="glyphicon glyphicon-user"> </span> &nbsp; Bunny Fans</div>
 		
-		<div style="margin-bottom:3px;" ng-if="main.loggedIn" style="color:red;"> <a href="/bunny" style="color:red;">Infinite Bunny </a> </div>
-		<div style="margin-bottom:3px;color:gray;" ng-if="!main.loggedIn" style="color:red;"> Infinite Bunny </div>
+		<!-- ng-if="main.loggedIn" -->
+		<div style="margin-bottom:3px;" style="color:red;"> <a href="/bunny" style="color:red;">Infinite Bunny </a> </div>
+		<!-- div style="margin-bottom:3px;color:gray;" ng-if="!main.loggedIn" style="color:red;"> Infinite Bunny </div -->
 		
-		<div style="margin-bottom:3px;" ng-if="main.loggedIn" style="color:red;"> <a href="/bunnycarousel" style="color:red;">Bunny Carousel </a> </div>
-		<div style="margin-bottom:3px;color:gray;" ng-if="!main.loggedIn" style="color:red;"> Bunny Carousel </div>
+		<!-- ng-if="main.loggedIn" -->
+		<div style="margin-bottom:3px;" style="color:red;"> <a href="/bunnycarousel" style="color:red;">Bunny Carousel </a> </div>
+		<!-- div style="margin-bottom:3px;color:gray;" ng-if="!main.loggedIn" style="color:red;"> Bunny Carousel </div -->
 		
-		<div style="margin-bottom:3px;" ng-if="main.loggedIn" style="color:red;"> <a href="/bunnymap" style="color:red;"> <span class="glyphicon glyphicon glyphicon glyphicon-map-marker"> </span> &nbsp; Bunny Map </a> </div>
-		<div style="margin-bottom:3px;color:gray;" ng-if="!main.loggedIn" style="color:red;"> <span class="glyphicon glyphicon glyphicon glyphicon-map-marker"> </span> &nbsp; Bunny Map </div>
+		<!-- ng-if="main.loggedIn" -->
+		<div style="margin-bottom:3px;" style="color:red;"> <a href="/bunnymap" style="color:red;"> <span class="glyphicon glyphicon glyphicon glyphicon-map-marker"> </span> &nbsp; Bunny Map </a> </div>
+		<!-- div style="margin-bottom:3px;color:gray;" ng-if="!main.loggedIn" style="color:red;"> <span class="glyphicon glyphicon glyphicon glyphicon-map-marker"> </span> &nbsp; Bunny Map </div -->
 		
-		<div style="margin-bottom:3px;" ng-if="main.loggedIn" style="color:red;"> <a href="/bunny3d" style="color:red;">Bunnies in 3D </a> </div>
-		<div style="margin-bottom:3px;color:gray;" ng-if="!main.loggedIn"> Bunnies in 3D </div>
+		<!-- ng-if="main.loggedIn" -->
+		<div style="margin-bottom:3px;" style="color:red;"> <a href="/bunny3d" style="color:red;">Bunnies in 3D </a> </div>
+		<!-- div style="margin-bottom:3px;color:gray;" ng-if="!main.loggedIn"> Bunnies in 3D </div -->
 		
-		<div style="margin-bottom:3px;" ng-if="main.loggedIn" style="color:red;"> <a href="/bunnygame" style="color:red;">Bunny Game </a> </div>
-		<div style="margin-bottom:3px;color:gray;" ng-if="!main.loggedIn"> Bunny Game </div>
+		<!-- ng-if="main.loggedIn" -->
+		<div style="margin-bottom:3px;" style="color:red;"> <a href="/bunnygame" style="color:red;">Bunny Game </a> </div>
+		<!-- div style="margin-bottom:3px;color:gray;" ng-if="!main.loggedIn"> Bunny Game </div -->
 		
 		<div style="margin-bottom:3px;"> <a href="/bunnytwodadv"> <span class="glyphicon glyphicon-picture"> </span> &nbsp; 2D Adventure</a> </div>
 		
 		<div style="margin-bottom:3px;"> <a href="/ascii"> <span class="glyphicon glyphicon-qrcode"> </span> &nbsp; Pic To ASCII</a> </div>
 		
-		<div ng-if="main.loggedIn" style="color:red;"> <a href="/bunny3dexplorer" style="color:red;"> <span class="glyphicon glyphicon glyphicon glyphicon-camera"> </span> &nbsp; 3D Explorer</a> </div>
-		<div ng-if="!main.loggedIn" style="color:gray;"> <span class="glyphicon glyphicon glyphicon glyphicon-camera"> </span> &nbsp; 3D Explorer </div>
+		<!-- ng-if="main.loggedIn" -->
+		<div style="color:red;"> <a href="/bunny3dexplorer" style="color:red;"> <span class="glyphicon glyphicon glyphicon glyphicon-camera"> </span> &nbsp; 3D Explorer</a> </div>
+		<!-- div ng-if="!main.loggedIn" style="color:gray;"> <span class="glyphicon glyphicon glyphicon glyphicon-camera"> </span> &nbsp; 3D Explorer </div -->
 		
 		<div style="margin-bottom:3px;"> <a href="/bunnybook"> <span class="glyphicon glyphicon glyphicon glyphicon-book"> </span> &nbsp; Bunny Book</a> </div>
 		<div style="color:red;"> <a href="/native" style="color:red;"> <span class="glyphicon glyphicon glyphicon glyphicon-download"> </span> &nbsp; Downloads</a> </div>
