@@ -19,7 +19,7 @@
 						<!-- br /><input type="text" ng-model="comments.data.username" ng-disabled="true"  style="width:100%;padding-left:9px;" / -->
 					</td>
 					<td style="vertical-align:top;padding:9px;">
-						<button type="submit" class="btn btn-block btn-primary" ng-disabled="comments.isempty(comments.data.comment)" style="min-width:59px;"><span class="glyphicon glyphicon-plus"> </span>Add</button>
+						<button type="submit" class="btn btn-block btn-primary" ng-disabled="comments.isempty(comments.data.comment) || !comments.isempty(comments.data.comment)" style="min-width:59px;"><span class="glyphicon glyphicon-plus"> </span>Add</button>
 					</td>
 				</tr>
 				<tr>
