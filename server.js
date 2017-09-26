@@ -85,10 +85,11 @@ mongoose.connect(config.database, function(err)
     if (err)
     {
 		console.error(err);
-		console.trace();
-		logger.error("mongoose.connect.exception:"+err);
-		process.exit(-13*2);	//trust pm2 to restart!
-    	throw err;
+	    	logger.error("mongoose.connect.exception:"+err);
+	    	//openshift-3 & -Registration temporarily unavailable!-
+		//console.trace();
+		//process.exit(-13*2);	//trust pm2 to restart!
+    		//throw err;
     }
 });
 mongoose.connection.on('error',function (err)
@@ -96,10 +97,11 @@ mongoose.connection.on('error',function (err)
     if (err)
     {
 		console.error(err);
-		console.trace();
-		logger.error("mongoose.connect.on.error:"+err);
-		process.exit(-13*3);	//trust pm2 to restart!
-    	throw err;
+	    	logger.error("mongoose.connect.on.error:"+err);
+	    	//openshift-3 & -Registration temporarily unavailable!-
+		//console.trace();
+		//process.exit(-13*3);	//trust pm2 to restart!
+    		//throw err;
     }
 }); 
 
@@ -127,9 +129,10 @@ process.on("uncaughtException", function (err)
 	// we're just executing the default behavior
 	// but you can implement your own custom logic here instead
 	console.error(err);
-	console.trace();
-	logger.error("uncaughtException:"+err);
-	process.exit(-13);	//trust pm2 to restart!
+	logger.error("uncaughtException:"+err);	
+	//openshift-3 & -Registration temporarily unavailable!-
+	//console.trace();
+	//process.exit(-13);	//trust pm2 to restart!
 });
 
 // START THE SERVER
