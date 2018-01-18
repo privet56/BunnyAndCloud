@@ -1,5 +1,5 @@
 # BunnyAndCloud
-BunnyAndCloud - the code behind https://bunnyandcloud-bunnyandcloud.193b.starter-ca-central-1.openshiftapps.com/
+BunnyAndCloud - the code behind http://nodejs-mongo-persistent-bunnyandcloud.193b.starter-ca-central-1.openshiftapps.com/
 
 A MEAN application (= MongoDB + Express + AngularJS), running on NodeJS.
 Additional libraries: pixi and ThreeJS (for 3D content in the browser), and some Angular JS plugins.
