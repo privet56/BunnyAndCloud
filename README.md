@@ -19,3 +19,7 @@ GUI
 ![bunnyandcloud.bunnymap.gif](https://github.com/privet56/BunnyAndCloud/blob/master/public/assets/img/bunnyandcloud.bunnymap.gif?raw=true)
 
 ![bunnyandcloud.with.infinitescroll.gif](https://github.com/privet56/BunnyAndCloud/blob/master/public/assets/img/bunnyandcloud.with.infinitescroll.gif?raw=true)
+
+### OpenShift configuration for HTTPS, encrypted by Transport Layer Security (TLS):
+
+![openshift.https.cfg.png](https://raw.githubusercontent.com/privet56/BunnyAndCloud/master/openshift.https.cfg.png)
