@@ -1,7 +1,7 @@
 {
   "name": "bunnyandcloud",
   "main": "main.js",
-  "scripts": {
+  "scripts4openshift3andpm2": {
     "start": "node main.js"
   },
   "dependencies": {
