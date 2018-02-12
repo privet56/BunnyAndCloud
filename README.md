@@ -35,3 +35,7 @@ Additional libraries: pixi and ThreeJS (for 3D content in the browser), and some
 ### OpenShift configuration for HTTPS, encrypted by Transport Layer Security (TLS):
 
 ![openshift.https.cfg.png](https://raw.githubusercontent.com/privet56/BunnyAndCloud/master/openshift.https.cfg.png)
+
+### GitHub WebHook triggers automatic update of the OpenShift NodeJS App after PUSH
+
+![github.webhook.png](https://raw.githubusercontent.com/privet56/BunnyAndCloud/master/github.webhook.png)
