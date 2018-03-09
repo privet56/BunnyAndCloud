@@ -32,6 +32,10 @@ Additional libraries: pixi and ThreeJS (for 3D content in the browser), and some
 
 ![bunnyandcloud.with.infinitescroll.gif](https://github.com/privet56/BunnyAndCloud/blob/master/public/assets/img/bunnyandcloud.with.infinitescroll.gif?raw=true)
 
+### Health Graph with NVD3 (D3 wrapper) and PM2 Data on the server side:
+
+![pm2.on.cloud.2.png](https://github.com/privet56/BunnyAndCloud/blob/master/pm2.on.cloud.2.png)
+
 ### OpenShift configuration for HTTPS, encrypted by Transport Layer Security (TLS):
 
 ![openshift.https.cfg.png](https://raw.githubusercontent.com/privet56/BunnyAndCloud/master/openshift.https.cfg.png)
