@@ -80,6 +80,7 @@ app.use(function(req, res, next)
 });
 
 // connect to our database (hosted on modulus.io)
+/* openshift-3 & -Registration temporarily unavailable!-
 mongoose.connect(config.database, function(err)
 {
     if (err)
@@ -104,7 +105,7 @@ mongoose.connection.on('error',function (err)
     		//throw err;
     }
 }); 
-
+*/
 // set static files location
 // used for requests that our frontend will make
 app.use(express.static(__dirname + '/public'));
