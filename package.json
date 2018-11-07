@@ -1,6 +1,9 @@
 {
   "name": "bunnyandcloud",
-  "main": "main.js",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
   "scripts4openshift3andpm2": {
     "start": "node main.js"
   },
